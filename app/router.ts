@@ -19,9 +19,9 @@ export default (app: Application) => {
           const percentStr = tmp && tmp[0] && parseFloat(tmp[0]);
           try {
             if (!percentStr) {
-              return ctx.service.guessStock.guess();
+              return await ctx.service.guessStock.guess();
             }
-            return ctx.service.guessStock.guess(percentStr / 100);
+            return await ctx.service.guessStock.guess(percentStr / 100);
           } catch (e) {
             return e.message;
           }
