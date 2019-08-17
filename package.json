@@ -23,9 +23,13 @@
   },
   "dependencies": {
     "co-wechat": "^2.3.0",
+    "distributions-normal-cdf": "0.0.2",
     "dotenv": "^8.0.0",
     "egg": "^2.6.1",
     "egg-scripts": "^2.6.0",
+    "moment": "^2.24.0",
+    "lodash": "^4.17.10",
+    "@types/lodash": "^4.14.117",
     "wechat-api": "^1.35.1"
   },
   "devDependencies": {
