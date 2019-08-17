@@ -17,10 +17,14 @@ export default (app: Application) => {
 
           const tmp = /[\d.]+/.exec(content);
           const percentStr = tmp && tmp[0] && parseFloat(tmp[0]);
-          if (!percentStr) {
-            return ctx.service.guessStock.guess();
+          try {
+            if (!percentStr) {
+              return ctx.service.guessStock.guess();
+            }
+            return ctx.service.guessStock.guess(percentStr / 100);
+          } catch (e) {
+            return e.message;
           }
-          return ctx.service.guessStock.guess(percentStr / 100);
         }
       }
       return '你很帅哦～～～';
