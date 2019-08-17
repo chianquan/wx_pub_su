@@ -1,5 +1,5 @@
 #!/bin/bash
 git reset --hard
-git push
+git pull
 npm run tsc
 npm stop&&npm start
