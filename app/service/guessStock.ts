@@ -15,7 +15,7 @@ const cache = {
 export default class GuessStock extends Service {
   async getTodayUpRate() {
     const {app} = this;
-    const todayStr = moment('2019-08-16').format('YYYY-MM-DD'); // todo test
+    const todayStr = moment().format('YYYY-MM-DD');
     if (cache.dayStr !== todayStr) {
       const ret = await app.curl('http://api.finance.ifeng.com/akmin?scode=sh000001&type=60', {
         dataType: 'json',
