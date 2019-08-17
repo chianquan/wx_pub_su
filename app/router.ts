@@ -4,8 +4,10 @@ import * as wechat from 'co-wechat';
 export default (app: Application) => {
   const {controller, config, router} = app;
   app.logger.info(config);
-  router.use(ctx => {
-    ctx.logger.info(`method:${ctx.method} path:${ctx.path} ${ctx.queries}`);
+  router.use(async (ctx, next) => {
+    ctx.logger.info(`method:${ctx.method} path:${ctx.path} ${JSON.stringify(ctx.queries)}`);
+    await next();
+    ctx.logger.info(ctx.body);
   });
   router.use(wechat({
     token: process.env.WX_TOKEN,
