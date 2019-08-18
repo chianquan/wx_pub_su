@@ -70,17 +70,14 @@ export default class GuessStock extends Service {
     return 1 - cdf(tmp);
   }
 
-  async getMathExpectation(todayUpGuessRate: number) {
-    const todayUpRate = await this.getTodayUpRate();
-    return todayUpRate * (1 / todayUpGuessRate);
-  }
-
   async guess(todayUpGuessRate?: number): Promise<string> {
+    const todayUpRate = await this.getTodayUpRate();
     if (todayUpGuessRate === undefined) {
       const todayUpRate = await this.getTodayUpRate();
-      return `今日上涨的概率为${todayUpRate.toFixed(2)}`;
+      const percentStr = (todayUpRate * 100).toFixed(2);
+      return `今日上涨的概率为${percentStr}%,猜涨率<=${percentStr}%，就选涨`;
     } else {
-      const mathExpection = await this.getMathExpectation(todayUpGuessRate);
+      const mathExpection = todayUpRate / todayUpGuessRate;
       if (mathExpection >= 1) {
         return `上证指数上涨的期望值为${mathExpection.toFixed(2)}（>=1）,应该猜涨涨涨～～`;
       } else {
