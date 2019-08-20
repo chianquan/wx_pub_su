@@ -1,4 +1,7 @@
-import {Application} from 'egg';
+import {
+  Application,
+  // Context,
+} from 'egg';
 import * as wechat from 'co-wechat';
 
 export default (app: Application) => {
