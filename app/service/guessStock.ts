@@ -91,6 +91,7 @@ export default class GuessStock extends Service {
     if (!lastDayClose || !theMiddle) {
       throw new Error('数据有误');
     }
+    const time = tmp3[30] + ' ' + tmp3[31];
     const u = 1.392 / 100000;
     const sig = 4.326 / 10000;
     const t = 120;
@@ -99,22 +100,21 @@ export default class GuessStock extends Service {
     // const sp = 2597.78;
     // const s0 = 2605.32;
     const tmp = 1.0 / Math.sqrt(t) / sig * (Math.log(sp / s0) - (u - sig ** 2 / 2) * t);
-    return 1 - cdf(tmp);
+    return {todayUpRate: 1 - cdf(tmp), time};
   };
 
   async guess(todayUpGuessRate?: number): Promise<string> {
-    const todayUpRate = await this.getTodayUpRate();
+    const {todayUpRate, time} = await this.getTodayUpRate();
     if (todayUpGuessRate === undefined) {
-      const todayUpRate = await this.getTodayUpRate();
       const percentStr = (todayUpRate * 100).toFixed(2);
-      return `今日上涨的概率为${percentStr}%,猜涨率<=${percentStr}%，就选涨`;
+      return `今日(${time})上涨的概率为${percentStr}%,猜涨率<=${percentStr}%，就选涨`;
     } else {
       const mathExpection = todayUpRate / todayUpGuessRate;
       if (mathExpection >= 1) {
-        return `上证指数上涨的期望值为${mathExpection.toFixed(2)}（>=1）,应该猜涨涨涨～～`;
+        return `上证指数上涨的期望值为${mathExpection.toFixed(2)}（>=1）,应该猜涨涨涨～～\n(数据更新时间：${time})`;
       } else {
 
-        return `上证指数上涨的期望值为${mathExpection.toFixed(2)}（<1）,应该猜跌跌跌～～`;
+        return `上证指数上涨的期望值为${mathExpection.toFixed(2)}（<1）,应该猜跌跌跌～～\n(数据更新时间：${time})`;
       }
     }
   }
