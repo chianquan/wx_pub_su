@@ -86,8 +86,8 @@ export default class GuessStock extends Service {
       throw new Error('数据有误');
     }
     const tmp3 = tmp2.split(',');
-    const lastDayClose = parseFloat(tmp3[3]);
-    const theMiddle = parseFloat(tmp3[1]);
+    const lastDayClose = parseFloat(tmp3[2]);
+    const theMiddle = parseFloat(tmp3[3]);
     if (!lastDayClose || !theMiddle) {
       throw new Error('数据有误');
     }
